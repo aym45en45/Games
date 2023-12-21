@@ -20,6 +20,7 @@ public class Main {
         int col = scanner.nextInt();
         if (!isVRowCol(boardA, row, col)) {
             System.out.println("Invalid case. Try again.");
+            scanner.close();
             return;
         }
         while (!isGameOver(boardA)) {
@@ -49,6 +50,7 @@ public class Main {
 
         drawMainBoard(boardA);
         System.out.println("Game over!");
+        scanner.close();
     }
 
     public static void drawMainBoard(Board[][] boardA) {
@@ -72,7 +74,7 @@ public class Main {
         return checkForWin(board) || checkForDraw(board);
     }
 
-    private static boolean checkForWin(Board[][] board) {
+    public static boolean checkForWin(Board[][] board) {
         for (int i = 0; i < 3; i++) {
             if ((board[i][0].p.equals(getPlayer()) && board[i][1].p.equals(getPlayer())
                     && board[i][2].p.equals(getPlayer())) ||
@@ -81,16 +83,16 @@ public class Main {
                 return true;
             }
         }
-        if ((board[0][0].p.equals(getPlayer()) && board[1][1].equals(getPlayer()) && board[2][2].p.equals(getPlayer()))
-                ||
-                (board[0][2].p.equals(getPlayer()) && board[1][1].equals(getPlayer())
-                        && board[2][0].p.equals(getPlayer()))) {
+        if ((board[0][0].p.equals(getPlayer()) && board[1][1].p.equals(getPlayer())
+                && board[2][2].p.equals(getPlayer()))
+                || (board[0][2].p.equals(getPlayer())
+                        && board[1][1].p.equals(getPlayer()) && board[2][0].p.equals(getPlayer()))) {
             return true;
         }
         return false;
     }
 
-    private static boolean checkForDraw(Board[][] board) {
+    public static boolean checkForDraw(Board[][] board) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j].p.equals("S")) {
@@ -101,23 +103,23 @@ public class Main {
         return true;
     }
 
-    private static void checkForSWin(Board[][] boardA, int row, int col) {
+    public static void checkForSWin(Board[][] boardA, int row, int col) {
         boolean var = false;
         if ((boardA[row][col].board[0][0].equals(getPlayer())
                 && boardA[row][col].board[1][1].equals(getPlayer())
                 && boardA[row][col].board[2][2].equals(getPlayer()))
-            ||(boardA[row][col].board[0][2].equals(getPlayer())
-                && boardA[row][col].board[1][1].equals(getPlayer())
-                && boardA[row][col].board[2][0].equals(getPlayer()))) {
+                || (boardA[row][col].board[0][2].equals(getPlayer())
+                        && boardA[row][col].board[1][1].equals(getPlayer())
+                        && boardA[row][col].board[2][0].equals(getPlayer()))) {
             var = true;
         } else {
             for (int i = 0; i < 3; i++) {
                 if ((boardA[row][col].board[i][0].equals(getPlayer())
                         && boardA[row][col].board[i][1].equals(getPlayer())
                         && boardA[row][col].board[i][2].equals(getPlayer()))
-                    ||(boardA[row][col].board[0][i].equals(getPlayer())
-                        && boardA[row][col].board[1][i].equals(getPlayer())
-                        && boardA[row][col].board[2][i].equals(getPlayer()))) {
+                        || (boardA[row][col].board[0][i].equals(getPlayer())
+                                && boardA[row][col].board[1][i].equals(getPlayer())
+                                && boardA[row][col].board[2][i].equals(getPlayer()))) {
                     var = true;
                     break;
                 }
@@ -136,7 +138,7 @@ public class Main {
         }
     }
 
-    private static void checkForSDraw(Board[][] boardA, int row, int col) {
+    public static void checkForSDraw(Board[][] boardA, int row, int col) {
         boolean var = true;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -158,12 +160,12 @@ public class Main {
         }
     }
 
-    private static boolean isVRowCol(Board[][] boardA, int row, int col) {
+    public static boolean isVRowCol(Board[][] boardA, int row, int col) {
         return row >= 0 && row < 3 && col >= 0 && col < 3 &&
                 boardA[row][col].p.equals("S");
     }
 
-    private static boolean isVSRowCol(Board[][] boardA, int row, int col, int subRow, int subCol) {
+    public static boolean isVSRowCol(Board[][] boardA, int row, int col, int subRow, int subCol) {
         return subRow >= 0 && subRow < 3 && subCol >= 0 && subCol < 3 &&
                 boardA[row][col].board[subRow][subCol].equals(" ");
     }
