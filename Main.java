@@ -38,8 +38,8 @@ public class Main {
             int subCol = scanner.nextInt();
             if (isVSRowCol(boardA, row, col, subRow, subCol)) {
                 boardA[row][col].board[subRow][subCol] = getPlayer();
-                checkForSWin(boardA, row, col);
-                checkForSDraw(boardA, row, col);
+                checkForWin(boardA, row, col);
+                checkForDraw(boardA, row, col);
                 row = subRow;
                 col = subCol;
                 drawMainBoard(boardA);
@@ -77,16 +77,14 @@ public class Main {
     public static boolean checkForWin(Board[][] board) {
         for (int i = 0; i < 3; i++) {
             if ((board[i][0].p.equals(getPlayer()) && board[i][1].p.equals(getPlayer())
-                    && board[i][2].p.equals(getPlayer())) ||
-                    (board[0][i].p.equals(getPlayer()) && board[1][i].p.equals(getPlayer())
-                            && board[2][i].p.equals(getPlayer()))) {
+                    && board[i][2].p.equals(getPlayer()))||(board[0][i].p.equals(getPlayer())
+                    && board[1][i].p.equals(getPlayer())&& board[2][i].p.equals(getPlayer()))) {
                 return true;
             }
         }
         if ((board[0][0].p.equals(getPlayer()) && board[1][1].p.equals(getPlayer())
-                && board[2][2].p.equals(getPlayer()))
-                || (board[0][2].p.equals(getPlayer())
-                        && board[1][1].p.equals(getPlayer()) && board[2][0].p.equals(getPlayer()))) {
+                && board[2][2].p.equals(getPlayer()))||(board[0][2].p.equals(getPlayer())
+                && board[1][1].p.equals(getPlayer()) && board[2][0].p.equals(getPlayer()))) {
             return true;
         }
         return false;
@@ -103,7 +101,7 @@ public class Main {
         return true;
     }
 
-    public static void checkForSWin(Board[][] boardA, int row, int col) {
+    public static void checkForWin(Board[][] boardA, int row, int col) {
         boolean var = false;
         if ((boardA[row][col].board[0][0].equals(getPlayer())
                 && boardA[row][col].board[1][1].equals(getPlayer())
@@ -138,12 +136,13 @@ public class Main {
         }
     }
 
-    public static void checkForSDraw(Board[][] boardA, int row, int col) {
+    public static void checkForDraw(Board[][] boardA, int row, int col) {
         boolean var = true;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3 && var; i++) {
             for (int j = 0; j < 3; j++) {
                 if (boardA[row][col].board[i][j].equals(" ") || boardA[row][col].p.equals(getPlayer())) {
                     var = false;
+                    break;
                 }
             }
         }
@@ -151,8 +150,8 @@ public class Main {
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < 3; i++) {
                     boardA[row][col].board[j][i] = "D";
-                    if (boardA[row][col].board[row][col].equals(" ")) {
-                        boardA[row][col].board[row][col] = "D";
+                    if (boardA[i][j].board[row][col].equals(" ")) {
+                        boardA[i][j].board[row][col] = "D";
                     }
                 }
             }
