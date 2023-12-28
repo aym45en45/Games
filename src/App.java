@@ -1,11 +1,9 @@
-package src;
-
 import java.util.Scanner;
 
-import src.XO.MainXO;
+import XO.MainXO;
 
-public class Main {
-    public static void main(String[] args) {
+public class App {
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         System.out.println("what game do u want to play?");
         System.out.println("1) XO.");
@@ -13,6 +11,5 @@ public class Main {
         int game = scanner.nextInt();
         if(game == 1)
             MainXO.mainXO();
-
     }
 }

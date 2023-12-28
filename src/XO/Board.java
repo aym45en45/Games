@@ -1,4 +1,4 @@
-package src.XO;
+package XO;
 
 public class Board {
     String[][] board;
