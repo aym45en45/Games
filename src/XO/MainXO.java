@@ -1,11 +1,12 @@
+package src.XO;
 
 import java.util.Scanner;
 
-public class Main {
+public class MainXO {
 
     public static boolean x = false;
 
-    public static void main(String[] args) {
+    public static void mainXO() {
 
         Board[][] boardA = new Board[3][3];
         for (int i = 0; i < 3; i++) {

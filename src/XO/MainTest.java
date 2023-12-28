@@ -1,9 +1,10 @@
+package src.XO;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MainTest {
+class MainXO_Test {
     Board[][] boardA = new Board[3][3];
     @BeforeEach
     void createBoard(){
@@ -18,38 +19,38 @@ class MainTest {
     void testCheckForWin() {
         
         for (int j = 0; j < 3; j++) {
-            boardA[j][j].p = Main.getPlayer();
+            boardA[j][j].p = MainXO.getPlayer();
         }
 
-        assertTrue(Main.checkForWin(boardA));
+        assertTrue(MainXO.checkForWin(boardA));
 
         for (int j = 0; j < 3; j++) {
             boardA[j][j].p = " ";
         }
 
         for (int j = 0; j < 3; j++) {
-            boardA[2 - j][j].p = Main.getPlayer();
+            boardA[2 - j][j].p = MainXO.getPlayer();
         }
 
-        assertTrue(Main.checkForWin(boardA));
+        assertTrue(MainXO.checkForWin(boardA));
 
         for (int j = 0; j < 3; j++) {
             boardA[2 - j][j].p = " ";
         }
         for (int j = 0; j < 3; j++) {
-            boardA[2][j].p = Main.getPlayer();
+            boardA[2][j].p = MainXO.getPlayer();
         }
 
-        assertTrue(Main.checkForWin(boardA));
+        assertTrue(MainXO.checkForWin(boardA));
         for (int j = 0; j < 3; j++) {
             boardA[2][j].p = " ";
         }
 
         for (int j = 0; j < 3; j++) {
-            boardA[j][1].p = Main.getPlayer();
+            boardA[j][1].p = MainXO.getPlayer();
         }
 
-        assertTrue(Main.checkForWin(boardA));
+        assertTrue(MainXO.checkForWin(boardA));
 
     }
 
@@ -66,7 +67,7 @@ class MainTest {
             }
         }
 
-        assertTrue(Main.checkForDraw(boardA));
+        assertTrue(MainXO.checkForDraw(boardA));
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 boardA[i][j].p = "S";
@@ -76,23 +77,23 @@ class MainTest {
 
     @Test
     public void testCheckForSWin() {
-        boardA[0][0].board[0][0]=Main.getPlayer();
-        boardA[0][0].board[0][1]=Main.getPlayer();
-        boardA[0][0].board[0][2]=Main.getPlayer();
-        Main.changePlayer();
-        boardA[2][0].board[0][0]=Main.getPlayer();
-        Main.changePlayer();
+        boardA[0][0].board[0][0]=MainXO.getPlayer();
+        boardA[0][0].board[0][1]=MainXO.getPlayer();
+        boardA[0][0].board[0][2]=MainXO.getPlayer();
+        MainXO.changePlayer();
+        boardA[2][0].board[0][0]=MainXO.getPlayer();
+        MainXO.changePlayer();
 
         // Call the method to be tested
-        Main.checkForWin(boardA, 0,0);
+        MainXO.checkForWin(boardA, 0,0);
 
         // Assert the expected result
-        assertEquals(Main.getPlayer(), boardA[0][0].p);
-        assertEquals(Main.getPlayer(), boardA[0][0].board[0][0]);
-        assertEquals(Main.getPlayer(), boardA[1][1].board[0][0]);
-        assertEquals(Main.getPlayer(), boardA[2][2].board[0][0]);
-        Main.changePlayer();
-        assertEquals(Main.getPlayer(), boardA[2][0].board[0][0]);
+        assertEquals(MainXO.getPlayer(), boardA[0][0].p);
+        assertEquals(MainXO.getPlayer(), boardA[0][0].board[0][0]);
+        assertEquals(MainXO.getPlayer(), boardA[1][1].board[0][0]);
+        assertEquals(MainXO.getPlayer(), boardA[2][2].board[0][0]);
+        MainXO.changePlayer();
+        assertEquals(MainXO.getPlayer(), boardA[2][0].board[0][0]);
     }
 
     @Test
@@ -110,7 +111,7 @@ class MainTest {
         }
 
         // Call the method to be tested
-        Main.checkForDraw(boardA, 0,0);
+        MainXO.checkForDraw(boardA, 0,0);
 
         // Assert the expected result
         assertEquals("D", boardA[0][0].p);
