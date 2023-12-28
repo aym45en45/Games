@@ -1,5 +1,7 @@
 package sudoku;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -52,7 +54,20 @@ public class MainSudoku {
         for (int index = 0; index <= r; index++) {
             int row = random.nextInt(9);
             int col = random.nextInt(9);
-            int n = random.nextInt(9);
+            int n = 0;
+            outerLoop: for (int i = 0; i < 9; i++) {
+                n = random.nextInt(9);
+                for (int j = 0; j < 9; j++) {
+                    if (boardS[i][col]==n){
+                        i=-1;
+                        continue outerLoop; 
+                    }
+                    if (boardS[row][j]==n){
+                        i=-1;
+                        continue outerLoop; 
+                    }
+                }
+            }
             boardS[row][col] = n;
         }
     }
@@ -65,7 +80,7 @@ public class MainSudoku {
                 if (boardS[i][j] == 0)
                     System.out.print("  ");
                 else
-                    System.out.print(" "+boardS[i][j]);
+                    System.out.print(" " + boardS[i][j]);
                 System.out.print("|");
             }
             System.out.print("\n ----------------------------");
