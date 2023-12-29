@@ -55,18 +55,20 @@ public class MainXO {
     }
 
     public static void drawMainBoard(Board[][] boardA) {
-        System.out.println("-----------------------------------");
+        System.out.println("   1  2  3 || 1  2  3 || 1  2  3");
+        System.out.println("  ===============================");
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 3; i++) {
                 System.out.println(
-                        boardA[j][0].board[i][0] + " | " + boardA[j][0].board[i][1] + " | " + boardA[j][0].board[i][2] +
-                                "    " + boardA[j][1].board[i][0] + " | " + boardA[j][1].board[i][1] + " | " +
-                                boardA[j][1].board[i][2] + "    " + boardA[j][2].board[i][0] + " | " +
-                                boardA[j][2].board[i][1] + " | " + boardA[j][2].board[i][2]);
-                if (i != 2 && i != 5 && i != 8)
-                    System.out.println("---------    ---------    ---------");
+                        (i + 1) + " " + boardA[j][0].board[i][0] + " | " + boardA[j][0].board[i][1] + " | " +
+                                boardA[j][0].board[i][2] + "||" + boardA[j][1].board[i][0] + " | " +
+                                boardA[j][1].board[i][1] + " | " + boardA[j][1].board[i][2] + "||" +
+                                boardA[j][2].board[i][0] + " | " + boardA[j][2].board[i][1] + " | " +
+                                boardA[j][2].board[i][2]);
+                if (i != 2)
+                    System.out.println("  ---------  ---------  ---------");
                 else
-                    System.out.println("\n");
+                    System.out.println("  ===============================");
             }
         }
     }
@@ -78,14 +80,16 @@ public class MainXO {
     public static boolean checkForWin(Board[][] board) {
         for (int i = 0; i < 3; i++) {
             if ((board[i][0].p.equals(getPlayer()) && board[i][1].p.equals(getPlayer())
-                    && board[i][2].p.equals(getPlayer()))||(board[0][i].p.equals(getPlayer())
-                    && board[1][i].p.equals(getPlayer())&& board[2][i].p.equals(getPlayer()))) {
+                    && board[i][2].p.equals(getPlayer()))
+                    || (board[0][i].p.equals(getPlayer())
+                            && board[1][i].p.equals(getPlayer()) && board[2][i].p.equals(getPlayer()))) {
                 return true;
             }
         }
         if ((board[0][0].p.equals(getPlayer()) && board[1][1].p.equals(getPlayer())
-                && board[2][2].p.equals(getPlayer()))||(board[0][2].p.equals(getPlayer())
-                && board[1][1].p.equals(getPlayer()) && board[2][0].p.equals(getPlayer()))) {
+                && board[2][2].p.equals(getPlayer()))
+                || (board[0][2].p.equals(getPlayer())
+                        && board[1][1].p.equals(getPlayer()) && board[2][0].p.equals(getPlayer()))) {
             return true;
         }
         return false;
