@@ -6,7 +6,7 @@ public class MainXO {
 
     public static boolean x = false;
 
-    public static void mainXO() {
+    public static void play() {
 
         Board[][] boardA = new Board[3][3];
         for (int i = 0; i < 3; i++) {
