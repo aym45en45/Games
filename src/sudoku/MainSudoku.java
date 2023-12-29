@@ -1,5 +1,6 @@
 package sudoku;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,30 +8,31 @@ public class MainSudoku {
     private static int D = 9;
     private static final String EMPTY_CELL = " ";
     private static String[][] board;
+    private static ArrayList<Details> randomBoardDetails = new ArrayList<>();
 
     public static void play() {
         initializeBoard();
-        randomBoard();
-        Scanner scanner = new Scanner(System.in);
+        generateRandomBoard();
+        Scanner scn = new Scanner(System.in);
         while (!gameOver()) {
             drawBoard();
             String a;
             do {
                 System.out.println("do u want to add or remove number [A/R]");
-                a = scanner.next();
+                a = scn.next();
             } while (!"a".equalsIgnoreCase(a) && !"r".equalsIgnoreCase(a));
             int x, y;
             do {
                 System.out.println("enter row and culem 1-9");
-                x = scanner.nextInt() - 1;
-                y = scanner.nextInt() - 1;
+                x = scn.nextInt() - 1;
+                y = scn.nextInt() - 1;
             } while (!isValid(x, y));
             if ("a".equalsIgnoreCase(a))
-                addNumber(x, y, scanner);
+                addNumber(x, y, scn);
             else
                 removeNumber(x, y);
         }
-        scanner.close();
+        scn.close();
         System.out.println("game over!");
     }
 
@@ -44,61 +46,79 @@ public class MainSudoku {
     }
 
     static void removeNumber(int x, int y) {
+        if (isPositionInRandomBoardDetails(x, y)) {
+            System.out.println("Cannot remove number that have a star * .");
+            return;
+        }
+
         board[x][y] = EMPTY_CELL;
     }
 
-    static void addNumber(int x, int y, Scanner scanner) {
+    private static boolean isPositionInRandomBoardDetails(int x, int y) {
+        for (Details details : randomBoardDetails) {
+            if (details.row == x && details.col == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static void addNumber(int x, int y, Scanner scn) {
         int z;
         do {
             System.out.println("enter number 1-9");
-            z = scanner.nextInt();
+            z = scn.nextInt();
         } while (!isValid(x, y, z, true));
         board[x][y] = "" + z;
     }
 
-    static void randomBoard() {
+    static void generateRandomBoard() {
         Random random = new Random();
         int r = random.nextInt(15, 20);
         for (int index = 0; index <= r; index++) {
+            Details details = new Details();
             int n = 0;
-            int row = 0;
-            int col = 0;
             for (int i = 0; i < D; i++) {
-                row = random.nextInt(D);
-                col = random.nextInt(D);
+                details.row = random.nextInt(D);
+                details.col = random.nextInt(D);
                 n = (random.nextInt(D) + 1);
-                if (!board[row][col].equals(EMPTY_CELL)) {
+                if (!board[details.row][details.col].equals(EMPTY_CELL)) {
                     i = -1;
                     continue;
                 }
-                if (!isValid(row, col, n, false)) {
+                if (!isValid(details.row, details.col, n, false)) {
                     i = -1;
                     continue;
                 }
 
             }
-            board[row][col] = "" + n;
+            board[details.row][details.col] = "" + n;
+            randomBoardDetails.add(details);
         }
     }
 
     static void drawBoard() {
-        System.out.println("   1  2  3 || 4  5  6 || 7  8  9");
-        System.out.println("  ===============================");
+        System.out.println("   1  2  3|| 4  5  6|| 7  8  9");
+        System.out.println("  ============================");
         for (int i = 0; i < D; i++) {
             System.out.print((i + 1) + EMPTY_CELL);
             for (int j = 0; j < D; j++) {
-                System.out.print(board[i][j]);
+                if (isPositionInRandomBoardDetails(i, j)) {
+                    System.out.print("*" + board[i][j]);
+                } else {
+                    System.out.print(" " + board[i][j]);
+                }
                 if (j != 2 && j != 5 && j != 8)
-                    System.out.print(" | ");
+                    System.out.print("|");
                 else if (j == 2 || j == 5)
                     System.out.print("||");
                 else
                     System.out.println();
             }
             if (i != 2 && i != 5 && i != 8)
-                System.out.println("  ---------  ---------  ---------");
+                System.out.println("  --------  --------  --------");
             else
-                System.out.println("  ===============================");
+                System.out.println("  ============================");
         }
 
     }
@@ -155,4 +175,13 @@ public class MainSudoku {
     static String[][] getBoard() {
         return board;
     }
+
+    static ArrayList<Details> getRandomBoardDetails() {
+        return randomBoardDetails;
+    }
+}
+
+class Details {
+    int row;
+    int col;
 }
