@@ -5,41 +5,59 @@ import java.util.Scanner;
 
 public class MainSudoku {
     private static int D = 9;
-    private static String[][] boardS = new String[D][D];
+    private static final String EMPTY_CELL = " ";
+    private static String[][] boardS;
 
     public static void mainSudoku() {
-        for (int i = 0; i < boardS.length; i++) {
-            for (int j = 0; j < boardS.length; j++) {
-                boardS[i][j] = " ";
-            }
-        }
+        initializeBoard();
         randomBoard();
         while (!gameOver()) {
-            Scanner snc = new Scanner(System.in);
             drawBoard();
             String a;
             do {
+                Scanner scanner = new Scanner(System.in);
                 System.out.println("do u want to add or remove number [A/R]");
-                a = snc.next();
+                a = scanner.next();
+                scanner.close();
             } while (!"a".equalsIgnoreCase(a) && !"r".equalsIgnoreCase(a));
             int x, y;
             do {
+                Scanner scanner = new Scanner(System.in);
                 System.out.println("enter row and culem 1-9");
-                x = snc.nextInt() - 1;
-                y = snc.nextInt() - 1;
+                x = scanner.nextInt() - 1;
+                y = scanner.nextInt() - 1;
+                scanner.close();
             } while (!isValid(x, y));
-            if ("a".equalsIgnoreCase(a)) {
-                int z;
-                do {
-                    System.out.println("enter number 1-9");
-                    z = snc.nextInt() - 1;
-                } while (!isValid(x, y, z));
-                boardS[x][y] = "" + z;
-            } else
-                boardS[x][y] = " ";
-
+            if ("a".equalsIgnoreCase(a))
+                addNumber(x, y);
+            else
+                removeNumber(x, y);
         }
         System.out.println("game over!");
+    }
+
+    static void initializeBoard() {
+        boardS = new String[D][D];
+        for (int i = 0; i < D; i++) {
+            for (int j = 0; j < D; j++) {
+                boardS[i][j] = EMPTY_CELL;
+            }
+        }
+    }
+
+    static void removeNumber(int x, int y) {
+        boardS[x][y] = EMPTY_CELL;
+    }
+
+    static void addNumber(int x, int y) {
+        int z;
+        do {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("enter number 1-9");
+            z = scanner.nextInt();
+            scanner.close();
+        } while (!isValid(x, y, z));
+        boardS[x][y] = "" + z;
     }
 
     private static void randomBoard() {
@@ -53,7 +71,7 @@ public class MainSudoku {
                 row = random.nextInt(D);
                 col = random.nextInt(D);
                 n = "" + (random.nextInt(D) + 1);
-                if (!boardS[row][col].equals(" ")) {
+                if (!boardS[row][col].equals(EMPTY_CELL)) {
                     i = -1;
                     continue;
                 }
@@ -88,7 +106,7 @@ public class MainSudoku {
         System.out.println("   1  2  3 || 4  5  6 || 7  8  9");
         System.out.println("  ===============================");
         for (int i = 0; i < D; i++) {
-            System.out.print((i + 1) + " ");
+            System.out.print((i + 1) + EMPTY_CELL);
             for (int j = 0; j < D; j++) {
                 System.out.print(boardS[i][j]);
                 if (j != 2 && j != 5 && j != 8)
@@ -109,7 +127,7 @@ public class MainSudoku {
     private static boolean gameOver() {
         for (int i = 0; i < D; i++) {
             for (int j = 0; j < D; j++) {
-                if (boardS[i][j].equals(" "))
+                if (boardS[i][j].equals(EMPTY_CELL))
                     return false;
             }
         }
