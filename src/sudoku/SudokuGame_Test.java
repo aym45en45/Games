@@ -1,9 +1,9 @@
 package sudoku;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-class MainSudokuTest {
+class SudokuGame_Test {
 
     @Test
     void testAddNumber() {
@@ -31,16 +31,16 @@ class MainSudokuTest {
 
         assertTrue(MainSudoku.isValid(0, 0));
 
-        assertFalse(MainSudoku.isValid(0, 0, 0,true));
-        assertFalse(MainSudoku.isValid(0, 0, 10,true));
+        assertFalse(MainSudoku.isValid(0, 0, 0, true));
+        assertFalse(MainSudoku.isValid(0, 0, 10, true));
 
-        assertTrue(MainSudoku.isValid(0, 0, 3,true));
+        assertTrue(MainSudoku.isValid(0, 0, 3, true));
 
         MainSudoku.addNumber(0, 0, new java.util.Scanner("2"));
-        assertFalse(MainSudoku.isValid(0, 8, 2,true));
-        assertFalse(MainSudoku.isValid(8, 0, 2,true));
-        assertFalse(MainSudoku.isValid(1, 1, 2,true));
-        assertTrue(MainSudoku.isValid(3, 1, 2,true));
+        assertFalse(MainSudoku.isValid(0, 8, 2, true));
+        assertFalse(MainSudoku.isValid(8, 0, 2, true));
+        assertFalse(MainSudoku.isValid(1, 1, 2, true));
+        assertTrue(MainSudoku.isValid(3, 1, 2, true));
     }
 
     @Test
@@ -56,8 +56,15 @@ class MainSudokuTest {
         MainSudoku.getBoard()[0][0] = " ";
         assertFalse(MainSudoku.gameOver());
     }
-    @Test
-    void randomBoard(){
 
+    @Test
+    void randomBoard() {
+        MainSudoku.initializeBoard();
+        MainSudoku.generateRandomBoard();
+        for (Details details : MainSudoku.getRandomBoardDetails()) {
+            int n = Integer.parseInt(MainSudoku.getBoard()[details.row][details.col]);
+            assertTrue(MainSudoku.isValid(details.row, details.col, n, true));
+        }
+        assertTrue(MainSudoku.solve());
     }
 }

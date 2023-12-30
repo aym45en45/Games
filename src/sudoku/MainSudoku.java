@@ -1,6 +1,7 @@
 package sudoku;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,31 +9,46 @@ public class MainSudoku {
     private static int D = 9;
     private static final String EMPTY_CELL = " ";
     private static String[][] board;
+    private static String[][] boardSolved;
     private static ArrayList<Details> randomBoardDetails = new ArrayList<>();
 
     public static void play() {
-        initializeBoard();
-        generateRandomBoard();
+        do {
+            initializeBoard();
+            generateRandomBoard();
+        } while (!solve());
         Scanner scn = new Scanner(System.in);
         while (!gameOver()) {
             drawBoard();
             String a;
             do {
                 System.out.println("do u want to add or remove number [A/R]");
+                System.out.println("enter s to solve it and finish th game.");
                 a = scn.next();
-            } while (!"a".equalsIgnoreCase(a) && !"r".equalsIgnoreCase(a));
+            } while (!"a".equalsIgnoreCase(a) && !"r".equalsIgnoreCase(a) && !"s".equalsIgnoreCase(a));
             int x, y;
             do {
-                System.out.println("enter row and culem 1-9");
-                x = scn.nextInt() - 1;
-                y = scn.nextInt() - 1;
+                try {
+                    System.out.println("Enter row and column (1-9):");
+                    x = scn.nextInt() - 1;
+                    y = scn.nextInt() - 1;
+                } catch (java.util.InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter valid row and column numbers.");
+                    scn.nextLine();
+                    x = y = -1;
+                }
             } while (!isValid(x, y));
             if ("a".equalsIgnoreCase(a))
                 addNumber(x, y, scn);
-            else
+            else if ("r".equalsIgnoreCase(a))
                 removeNumber(x, y);
+            else {
+                board = boardSolved;
+                break;
+            }
         }
         scn.close();
+        drawBoard();
         System.out.println("game over!");
     }
 
@@ -139,12 +155,12 @@ public class MainSudoku {
             return false;
         } else {
             for (int i = 0; i < D; i++) {
-                if (board[x][i].equals(String.valueOf(z))) {
+                if (i != y && board[x][i].equals(String.valueOf(z))) {
                     if (var)
                         System.out.println("the number is exist in line " + (i + 1) + ". Try again.");
                     return false;
                 }
-                if (board[i][y].equals(String.valueOf(z))) {
+                if (i != x && board[i][y].equals(String.valueOf(z))) {
                     if (var)
                         System.out.println("the number is exist in colume " + (i + 1) + ". Try again.");
                     return false;
@@ -156,7 +172,7 @@ public class MainSudoku {
             Y *= 3;
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (board[X + i][Y + j].equals(String.valueOf(z))) {
+                    if ((X + i) != x && (j + Y) != y && board[X + i][Y + j].equals(String.valueOf(z))) {
                         if (var)
                             System.out.println(
                                     "the number is exist in squir " + (x / 3) + "," + (y / 3) + ". Try again.");
@@ -166,6 +182,30 @@ public class MainSudoku {
             }
             return true;
         }
+    }
+
+    static boolean solve() {
+
+        boardSolved = Arrays.copyOf(board, D);
+        for (int row = 0; row < D; row++) {
+            for (int col = 0; col < D; col++) {
+                if (boardSolved[row][col].equals(EMPTY_CELL)) {
+                    for (int num = 1; num <= 9; num++) {
+                        if (isValid(row, col, num, false)) {
+                            boardSolved[row][col] = "" + num;
+
+                            if (solve()) {
+                                return true;
+                            }
+                        }
+                    }
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     static boolean isValid(int a, int b) {
