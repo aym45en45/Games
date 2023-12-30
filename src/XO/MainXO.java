@@ -27,26 +27,43 @@ public class MainXO {
         while (!isGameOver(boardA)) {
             changePlayer();
             while (!isVRowCol(boardA, row, col)) {
-                System.out.println("Enter another row column to countine");
-                row = scanner.nextInt();
-                col = scanner.nextInt();
+                try {
+                    System.out.println("Enter another row column to countine");
+                    row = scanner.nextInt();
+                    col = scanner.nextInt();
+                } catch (java.util.InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter valid row and column numbers.");
+                    scanner.nextLine();
+                    row = col = -1;
+                }
                 if (!isVRowCol(boardA, row, col)) {
                     System.out.println("Invalid case. Try again.");
                 }
             }
-            System.out.println("Enter your move player " + getPlayer() + " in row " + row + ", column " + col + ":");
-            int subRow = scanner.nextInt();
-            int subCol = scanner.nextInt();
-            if (isVSRowCol(boardA, row, col, subRow, subCol)) {
-                boardA[row][col].board[subRow][subCol] = getPlayer();
-                checkForWin(boardA, row, col);
-                checkForDraw(boardA, row, col);
-                row = subRow;
-                col = subCol;
-                drawMainBoard(boardA);
-            } else {
-                System.out.println("Invalid move. Try again.");
-            }
+            int subRow;
+            int subCol;
+            do {
+                try {
+                    System.out.println(
+                            "Enter your move player " + getPlayer() + " in row " + row + ", column " + col + ":");
+                    subRow = scanner.nextInt();
+                    subCol = scanner.nextInt();
+                } catch (java.util.InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter valid row and column numbers.");
+                    scanner.nextLine();
+                    subRow = subCol = -1;
+                }
+                if (isVSRowCol(boardA, row, col, subRow, subCol)) {
+                    boardA[row][col].board[subRow][subCol] = getPlayer();
+                    checkForWin(boardA, row, col);
+                    checkForDraw(boardA, row, col);
+                    row = subRow;
+                    col = subCol;
+                    drawMainBoard(boardA);
+                } else {
+                    System.out.println("Invalid move. Try again.");
+                }
+            } while (!isVSRowCol(boardA, row, col, subRow, subCol));
         }
 
         drawMainBoard(boardA);
