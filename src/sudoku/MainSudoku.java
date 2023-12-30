@@ -16,7 +16,8 @@ public class MainSudoku {
         do {
             initializeBoard();
             generateRandomBoard();
-        } while (!solve());
+            boardSolved = deepCopy(board);
+        } while (!solve(boardSolved));
         Scanner scn = new Scanner(System.in);
         while (!gameOver()) {
             drawBoard();
@@ -184,9 +185,7 @@ public class MainSudoku {
         }
     }
 
-    static boolean solve() {
-
-        boardSolved = Arrays.copyOf(board, D);
+    static boolean solve(String[][] boardSolved) {
         for (int row = 0; row < D; row++) {
             for (int col = 0; col < D; col++) {
                 if (boardSolved[row][col].equals(EMPTY_CELL)) {
@@ -194,7 +193,7 @@ public class MainSudoku {
                         if (isValid(row, col, num, false)) {
                             boardSolved[row][col] = "" + num;
 
-                            if (solve()) {
+                            if (solve(boardSolved)) {
                                 return true;
                             }
                         }
@@ -208,6 +207,19 @@ public class MainSudoku {
         return true;
     }
 
+    static String[][] deepCopy(String[][] original) {
+        if (original == null) {
+            return null;
+        }
+
+        String[][] copy = new String[original.length][];
+        for (int i = 0; i < original.length; i++) {
+            copy[i] = Arrays.copyOf(original[i], original[i].length);
+        }
+
+        return copy;
+    }
+
     static boolean isValid(int a, int b) {
         return 0 <= a && a < 9 && 0 <= b && b < 9;
     }
@@ -219,6 +231,7 @@ public class MainSudoku {
     static ArrayList<Details> getRandomBoardDetails() {
         return randomBoardDetails;
     }
+
 }
 
 class Details {

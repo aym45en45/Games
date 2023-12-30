@@ -65,6 +65,6 @@ class SudokuGame_Test {
             int n = Integer.parseInt(MainSudoku.getBoard()[details.row][details.col]);
             assertTrue(MainSudoku.isValid(details.row, details.col, n, true));
         }
-        assertTrue(MainSudoku.solve());
+        assertTrue(MainSudoku.solve(MainSudoku.getBoard()));
     }
 }
