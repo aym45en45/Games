@@ -31,16 +31,16 @@ class SudokuGame_Test {
 
         assertTrue(MainSudoku.isValid(0, 0));
 
-        assertFalse(MainSudoku.isValid(0, 0, 0, true));
-        assertFalse(MainSudoku.isValid(0, 0, 10, true));
+        assertFalse(MainSudoku.isValid(MainSudoku.getBoard(),0, 0, 0, true));
+        assertFalse(MainSudoku.isValid(MainSudoku.getBoard(),0, 0, 10, true));
 
-        assertTrue(MainSudoku.isValid(0, 0, 3, true));
+        assertTrue(MainSudoku.isValid(MainSudoku.getBoard(),0, 0, 3, true));
 
         MainSudoku.addNumber(0, 0, new java.util.Scanner("2"));
-        assertFalse(MainSudoku.isValid(0, 8, 2, true));
-        assertFalse(MainSudoku.isValid(8, 0, 2, true));
-        assertFalse(MainSudoku.isValid(1, 1, 2, true));
-        assertTrue(MainSudoku.isValid(3, 1, 2, true));
+        assertFalse(MainSudoku.isValid(MainSudoku.getBoard(),0, 8, 2, true));
+        assertFalse(MainSudoku.isValid(MainSudoku.getBoard(),8, 0, 2, true));
+        assertFalse(MainSudoku.isValid(MainSudoku.getBoard(),1, 1, 2, true));
+        assertTrue(MainSudoku.isValid(MainSudoku.getBoard(),3, 1, 2, true));
     }
 
     @Test
@@ -63,7 +63,7 @@ class SudokuGame_Test {
         MainSudoku.generateRandomBoard();
         for (Details details : MainSudoku.getRandomBoardDetails()) {
             int n = Integer.parseInt(MainSudoku.getBoard()[details.row][details.col]);
-            assertTrue(MainSudoku.isValid(details.row, details.col, n, true));
+            assertTrue(MainSudoku.isValid(MainSudoku.getBoard(),details.row, details.col, n, true));
         }
         assertTrue(MainSudoku.solve(MainSudoku.getBoard()));
     }

@@ -10,7 +10,7 @@ public class MainSudoku {
     private static final String EMPTY_CELL = " ";
     private static String[][] board;
     private static String[][] boardSolved;
-    private static ArrayList<Details> randomBoardDetails = new ArrayList<>();
+    private static ArrayList<Details> randomBoardDetails ;
 
     public static void play() {
         do {
@@ -27,25 +27,27 @@ public class MainSudoku {
                 System.out.println("enter s to solve it and finish th game.");
                 a = scn.next();
             } while (!"a".equalsIgnoreCase(a) && !"r".equalsIgnoreCase(a) && !"s".equalsIgnoreCase(a));
-            int x, y;
-            do {
-                try {
-                    System.out.println("Enter row and column (1-9):");
-                    x = scn.nextInt() - 1;
-                    y = scn.nextInt() - 1;
-                } catch (java.util.InputMismatchException e) {
-                    System.out.println("Invalid input. Please enter valid row and column numbers.");
-                    scn.nextLine();
-                    x = y = -1;
-                }
-            } while (!isValid(x, y));
-            if ("a".equalsIgnoreCase(a))
-                addNumber(x, y, scn);
-            else if ("r".equalsIgnoreCase(a))
-                removeNumber(x, y);
-            else {
+
+            if ("s".equalsIgnoreCase(a)) {
                 board = boardSolved;
                 break;
+            } else {
+                int x, y;
+                do {
+                    try {
+                        System.out.println("Enter row and column (1-9):");
+                        x = scn.nextInt() - 1;
+                        y = scn.nextInt() - 1;
+                    } catch (java.util.InputMismatchException e) {
+                        System.out.println("Invalid input. Please enter valid row and column numbers.");
+                        scn.nextLine();
+                        x = y = -1;
+                    }
+                } while (!isValid(x, y));
+                if ("a".equalsIgnoreCase(a))
+                    addNumber(x, y, scn);
+                else if ("r".equalsIgnoreCase(a))
+                    removeNumber(x, y);
             }
         }
         scn.close();
@@ -85,13 +87,14 @@ public class MainSudoku {
         do {
             System.out.println("enter number 1-9");
             z = scn.nextInt();
-        } while (!isValid(x, y, z, true));
+        } while (!isValid(board, x, y, z, true));
         board[x][y] = "" + z;
     }
 
     static void generateRandomBoard() {
         Random random = new Random();
         int r = random.nextInt(15, 20);
+        randomBoardDetails = new ArrayList<>();
         for (int index = 0; index <= r; index++) {
             Details details = new Details();
             int n = 0;
@@ -103,7 +106,7 @@ public class MainSudoku {
                     i = -1;
                     continue;
                 }
-                if (!isValid(details.row, details.col, n, false)) {
+                if (!isValid(board, details.row, details.col, n, false)) {
                     i = -1;
                     continue;
                 }
@@ -150,7 +153,7 @@ public class MainSudoku {
         return true;
     }
 
-    static boolean isValid(int x, int y, int z, boolean var) {
+    static boolean isValid(String[][] board, int x, int y, int z, boolean var) {
         if (0 >= z || z > 9) {
             System.out.println("the number have to be between 1-9. Try again.");
             return false;
@@ -190,7 +193,7 @@ public class MainSudoku {
             for (int col = 0; col < D; col++) {
                 if (boardSolved[row][col].equals(EMPTY_CELL)) {
                     for (int num = 1; num <= 9; num++) {
-                        if (isValid(row, col, num, false)) {
+                        if (isValid(boardSolved, row, col, num, false)) {
                             boardSolved[row][col] = "" + num;
 
                             if (solve(boardSolved)) {
