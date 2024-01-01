@@ -1,4 +1,4 @@
-public class Board {
+public class MainChess {
     static final String[] pieces = {"K","Q","R","N","B","P","k","q","r","n","b","p"};
     static String[][] board = new String[][] {
                   {"r","n","b","q","k","b","n","r"},
@@ -31,7 +31,7 @@ public class Board {
         }
         System.out.println("========================================");
     }
-    public static void main(String[] args) {
+    public static void play() {
       drawBoard();
     }
 }
