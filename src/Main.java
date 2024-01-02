@@ -11,14 +11,23 @@ public class Main {
         System.out.println("2) Sudoku.");
         System.out.println("3) chess.");
         int game = scanner.nextInt();
-        if (game == 1)
-            MainXO.play();
-        else if (game == 2)
-            MainSudoku.play();
-        else if(game ==3)
-            MainChess.play();
-        else
-            System.out.println("yawdi golna 1 wala 2 wala 3");
+        switch (game) {
+            case 1:
+                MainXO xo = new MainXO();
+                xo.play();
+                break;
+            case 2:
+                MainSudoku sudoku = new MainSudoku();
+                sudoku.play();
+                break;
+            case 3:
+                MainChess chess = new MainChess();
+                chess.play();
+                break;
+            default:
+                System.out.println("yawdi golna 1 wala 2 wala 3");
+                break;
+        }        
         scanner.close();
 
     }
