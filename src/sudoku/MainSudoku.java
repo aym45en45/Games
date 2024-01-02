@@ -4,23 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import game.Game;
 
-public class MainSudoku {
-    private static int D = 9;
-    private static final String EMPTY_CELL = " ";
-    private static String[][] board;
-    private static String[][] boardSolved;
-    private static ArrayList<Details> randomBoardDetails ;
+public class MainSudoku extends Game {
 
-    public static void play() {
+    private BoardSudoku board = new BoardSudoku();
+    @Override
+    public void play() {
         do {
-            initializeBoard();
-            generateRandomBoard();
-            boardSolved = deepCopy(board);
-        } while (!solve(boardSolved));
+            board.generateRandomBoard();
+            BoardSudoku.boardSolved = deepCopy(board);
+        } while (!solve(BoardSudoku.boardSolved));
         Scanner scn = new Scanner(System.in);
         while (!gameOver()) {
-            drawBoard();
+            board.draw();
             String a;
             do {
                 System.out.println("do u want to add or remove number [A/R]");
@@ -29,7 +26,7 @@ public class MainSudoku {
             } while (!"a".equalsIgnoreCase(a) && !"r".equalsIgnoreCase(a) && !"s".equalsIgnoreCase(a));
 
             if ("s".equalsIgnoreCase(a)) {
-                board = boardSolved;
+                board = BoardSudoku.boardSolved;
                 break;
             } else {
                 int x, y;
@@ -51,17 +48,24 @@ public class MainSudoku {
             }
         }
         scn.close();
-        drawBoard();
+        board.draw();
         System.out.println("game over!");
     }
 
-    static void initializeBoard() {
-        board = new String[D][D];
+    @Override
+    public boolean gameOver() {
         for (int i = 0; i < D; i++) {
             for (int j = 0; j < D; j++) {
-                board[i][j] = EMPTY_CELL;
+                if (board[i][j].equals(EMPTY_CELL))
+                    return false;
             }
         }
+        return true;
+    }
+
+    @Override
+    public boolean isValid(int a, int b) {
+        return 0 <= a && a < 9 && 0 <= b && b < 9;
     }
 
     static void removeNumber(int x, int y) {
@@ -117,42 +121,6 @@ public class MainSudoku {
         }
     }
 
-    static void drawBoard() {
-        System.out.println("   1  2  3|| 4  5  6|| 7  8  9");
-        System.out.println("  ============================");
-        for (int i = 0; i < D; i++) {
-            System.out.print((i + 1) + EMPTY_CELL);
-            for (int j = 0; j < D; j++) {
-                if (isPositionInRandomBoardDetails(i, j)) {
-                    System.out.print("*" + board[i][j]);
-                } else {
-                    System.out.print(" " + board[i][j]);
-                }
-                if (j != 2 && j != 5 && j != 8)
-                    System.out.print("|");
-                else if (j == 2 || j == 5)
-                    System.out.print("||");
-                else
-                    System.out.println();
-            }
-            if (i != 2 && i != 5 && i != 8)
-                System.out.println("  --------  --------  --------");
-            else
-                System.out.println("  ============================");
-        }
-
-    }
-
-    static boolean gameOver() {
-        for (int i = 0; i < D; i++) {
-            for (int j = 0; j < D; j++) {
-                if (board[i][j].equals(EMPTY_CELL))
-                    return false;
-            }
-        }
-        return true;
-    }
-
     static boolean isValid(String[][] board, int x, int y, int z, boolean var) {
         if (0 >= z || z > 9) {
             System.out.println("the number have to be between 1-9. Try again.");
@@ -188,15 +156,15 @@ public class MainSudoku {
         }
     }
 
-    static boolean solve(String[][] boardSolved) {
+    static boolean solve(String[][] BoardSudoku.boardSolved) {
         for (int row = 0; row < D; row++) {
             for (int col = 0; col < D; col++) {
-                if (boardSolved[row][col].equals(EMPTY_CELL)) {
+                if (BoardSudoku.boardSolved[row][col].equals(EMPTY_CELL)) {
                     for (int num = 1; num <= 9; num++) {
-                        if (isValid(boardSolved, row, col, num, false)) {
-                            boardSolved[row][col] = "" + num;
+                        if (isValid(BoardSudoku.boardSolved, row, col, num, false)) {
+                            BoardSudoku.boardSolved[row][col] = "" + num;
 
-                            if (solve(boardSolved)) {
+                            if (solve(BoardSudoku.boardSolved)) {
                                 return true;
                             }
                         }
@@ -223,21 +191,8 @@ public class MainSudoku {
         return copy;
     }
 
-    static boolean isValid(int a, int b) {
-        return 0 <= a && a < 9 && 0 <= b && b < 9;
-    }
-
     static String[][] getBoard() {
         return board;
     }
 
-    static ArrayList<Details> getRandomBoardDetails() {
-        return randomBoardDetails;
-    }
-
-}
-
-class Details {
-    int row;
-    int col;
 }
