@@ -17,8 +17,8 @@ public class MainSudoku extends Game {
             board.draw();
             String a;
             do {
-                System.out.println("do u want to add or remove number [A/R]");
-                System.out.println("enter s to solve it and finish th game.");
+                System.out.println("-if u want enter [S] to solve it and finish th game.-");
+                System.out.println("do u want to add or remove number enter [A/R]");
                 a = scn.next();
             } while (!"a".equalsIgnoreCase(a) && !"r".equalsIgnoreCase(a) && !"s".equalsIgnoreCase(a));
 

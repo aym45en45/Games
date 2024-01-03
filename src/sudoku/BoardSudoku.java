@@ -9,7 +9,7 @@ import game.Details;
 
 public class BoardSudoku extends Board {
     private static ArrayList<Details> randomBoardDetails;
-    private String[][] solvedBoard; 
+    private String[][] solvedBoard;
 
     @Override
     public void draw() {
@@ -19,9 +19,9 @@ public class BoardSudoku extends Board {
             System.out.print((i + 1) + EMPTY_CELL);
             for (int j = 0; j < D; j++) {
                 if (isPositionInRandomBoardDetails(i, j)) {
-                    System.out.print("*" + board[i][j]+"*");
+                    System.out.print("*" + board[i][j] + "*");
                 } else {
-                    System.out.print(" " + board[i][j]+" ");
+                    System.out.print(" " + board[i][j] + " ");
                 }
                 if ((j + 1) % 3 != 0)
                     System.out.print("|");
@@ -96,7 +96,9 @@ public class BoardSudoku extends Board {
                 }
             }
         }
-
+        String[][] Box = copyBoard(board);
+        board = copyBoard(solvedBoard);
+        solvedBoard = copyBoard(Box);
         return true;
     }
 
@@ -128,10 +130,9 @@ public class BoardSudoku extends Board {
                 randomBoardDetails.add(details);
             }
 
+            solvedBoard = copyBoard(board);
         } while (!solve());
-        solvedBoard = copyBoard(board);
     }
-
 
     private static String[][] copyBoard(String[][] original) {
         if (original == null) {
@@ -145,7 +146,8 @@ public class BoardSudoku extends Board {
 
         return copy;
     }
-    void solveBoard(){
+
+    void solveBoard() {
         board = solvedBoard;
     }
 
