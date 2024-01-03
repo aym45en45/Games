@@ -1,20 +1,21 @@
 package sudoku;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
-class SudokuGame_Test {
-
+public class BoardSudokuTest {
+    BoardSudoku sudoku = new BoardSudoku();
     @Test
     void testAddNumber() {
-        MainSudoku.initializeBoard();
+        
         MainSudoku.addNumber(0, 0, new java.util.Scanner("1"));
         assertEquals("1", MainSudoku.getBoard()[0][0]);
     }
 
     @Test
     void testRemoveNumber() {
-        MainSudoku.initializeBoard();
+        
         MainSudoku.addNumber(0, 0, new java.util.Scanner("1"));
         assertEquals("1", MainSudoku.getBoard()[0][0]);
         MainSudoku.removeNumber(0, 0);
@@ -23,7 +24,7 @@ class SudokuGame_Test {
 
     @Test
     void testIsValid() {
-        MainSudoku.initializeBoard();
+        
         assertFalse(MainSudoku.isValid(0, 9));
         assertFalse(MainSudoku.isValid(9, 0));
         assertFalse(MainSudoku.isValid(9, 6));
@@ -45,7 +46,7 @@ class SudokuGame_Test {
 
     @Test
     void testGameOver() {
-        MainSudoku.initializeBoard();
+        
         assertFalse(MainSudoku.gameOver());
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -59,12 +60,28 @@ class SudokuGame_Test {
 
     @Test
     void randomBoard() {
-        MainSudoku.initializeBoard();
+        
         MainSudoku.generateRandomBoard();
         for (Details details : MainSudoku.getRandomBoardDetails()) {
             int n = Integer.parseInt(MainSudoku.getBoard()[details.row][details.col]);
             assertTrue(MainSudoku.isValid(MainSudoku.getBoard(),details.row, details.col, n, true));
         }
         assertTrue(MainSudoku.solve(MainSudoku.getBoard()));
+    }
+
+    @Test
+    void testSolve() {
+        String[][] board = new String[][] {
+            { " ", "7", "9", "8", " ", "2", " ", "6" ,"3"},
+            { "6", " ", " ", "9", " ", " ", " ", "1" ," "},
+            { "8", " ", "3", " ", "7", " ", " ", " " ,"2"},
+            { " ", "9", " ", " ", " ", " ", "3", "7" ,"1"},
+            { " ", "6", "8", "7", " ", " ", " ", "9" ," "},
+            { " ", "3", "1", " ", "2", " ", "5", "8" ," "},
+            { "2", "8", "6", "5", " ", " ", "1", "3" ," "},
+            { " ", " ", " ", " ", " ", " ", " ", " " ," "},
+            { "9", " ", "4", "3", " ", " ", "8", "2" ,"7"},
+        }; 
+        assertTrue(BoardSudoku.solve(board));
     }
 }

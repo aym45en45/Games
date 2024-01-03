@@ -1,8 +1,8 @@
 package game;
 
 public abstract class Board {
-    protected static final int D = 9;
-    private static final String EMPTY_CELL = " ";
+    public static final int D = 9;
+    public static final String EMPTY_CELL = " ";
     protected String[][] board;
 
     
