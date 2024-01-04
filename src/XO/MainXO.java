@@ -202,11 +202,11 @@ public class MainXO extends Game {
         }
     }
 
-    public static void changePlayer() {
+    static void changePlayer() {
         x = !x;
     }
 
-    public static String getPlayer() {
+    static String getPlayer() {
         return x ? "X" : "O";
     }
 

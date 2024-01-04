@@ -1,45 +1,50 @@
 package chess;
 
-public class MainChess {
-  static final String[] pieces = { "K", "Q", "R", "N", "B", "P", "k", "q", "r", "n", "b", "p" };
-  static String[][] board;
+import java.util.Scanner;
 
-  static void initializeBoard() {
-    board = new String[][] {
-        { "r", "n", "b", "q", "k", "b", "n", "r" },
-        { "p", "p", "p", "p", "p", "p", "p", "p" },
-        { " ", " ", " ", " ", " ", " ", " ", " " },
-        { " ", " ", " ", " ", " ", " ", " ", " " },
-        { " ", " ", " ", " ", " ", " ", " ", " " },
-        { " ", " ", " ", " ", " ", " ", " ", " " },
-        { "P", "P", "P", "P", "P", "P", "P", "P" },
-        { "R", "N", "B", "Q", "K", "B", "N", "R" },
-    };
+import XO.DetailsXO;
+import game.Game;
+
+public class MainChess extends Game {
+  private static boolean x = false;
+  private BoardChess board = new BoardChess();
+
+  @Override
+  public void play() {
+    Scanner scanner = new Scanner(System.in);
+    board.draw();
+    // while (!gameOver()) {
+    // changePlayer();
+    // String move, col;
+    // do {
+    // System.out.println(
+    // "Enter your move player " + getPlayer() + ":");
+    // move = scanner.next();
+    // if (board.isValid(move)) {
+    // board.draw();
+    // } else if(board.check(move)){
+    // System.out.println("Invalid move. Try again.");
+    // }
+    // } while (!board.isValid());
+    // }
+
+    // board.draw();
+    // System.out.println("Game over!");
+    // scanner.close();
+    // }
+
   }
 
-  static void drawBoard() {
-    for (int in = 0; in < 8; in++) {
-      System.out.println("========================================");
-      for (int i = 0; i < 8; i++) {
-        if (in % 2 == 0) {
-          if (i % 2 == 0)
-            System.out.print("| " + board[in][i] + " |");
-          else
-            System.out.print("|+" + board[in][i] + "+|");
-        } else {
-          if (i % 2 != 0)
-            System.out.print("| " + board[in][i] + " |");
-          else
-            System.out.print("|+" + board[in][i] + "+|");
-        }
-      }
-      System.out.println();
-    }
-    System.out.println("========================================");
+  @Override
+  public boolean gameOver() {
+    return true;
   }
 
-  public static void play() {
-    initializeBoard();
-    drawBoard();
+  static void changePlayer() {
+    x = !x;
+  }
+
+  static String getPlayer() {
+    return x ? "White" : "Black";
   }
 }
