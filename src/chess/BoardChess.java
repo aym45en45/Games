@@ -5,7 +5,7 @@ import game.Board;
 public class BoardChess extends Board {
     private int[] square1 = new int[2];
     private int[] square2 = new int[2];
-    //trun pieces to hachMap
+    //dir pieces hachMap
     final String[] pieces = { "K", "Q", "R", "N", "B", "P", "k", "q", "r", "n", "b", "p" };
 
     public BoardChess() {
