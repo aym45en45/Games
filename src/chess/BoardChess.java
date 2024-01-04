@@ -3,17 +3,51 @@ package chess;
 import game.Board;
 
 public class BoardChess extends Board {
-    static final String[] pieces = { "K", "Q", "R", "N", "B", "P", "k", "q", "r", "n", "b", "p" };
+    private int[] square1 = new int[2];
+    private int[] square2 = new int[2];
+    final String[] pieces = { "K", "Q", "R", "N", "B", "P", "k", "q", "r", "n", "b", "p" };
 
     public BoardChess() {
         initialize();
+    }
+
+    public void move(String move) {
+
+    }
+
+    public boolean check(String check) {
+        split(check);
+        switch (getPiece(square1)) {
+            case " ":
+                return false;
+            case piece[2]:
+                return false;
+            default:
+                return false;
+        }
+
+    }
+
+    private String getPiece(int[] square) {
+        return board[square[0]][square[1]];
+    }
+
+    public void split(String split) {
+        square1[0] = split.charAt(0) - 'a' + 1;
+        square1[1] = split.charAt(1);
+        square2[0] = split.charAt(0) - 'a' + 1;
+        square2[1] = split.charAt(1);
+    }
+
+    public boolean showValidMove(String move) {
+        return false;
     }
 
     @Override
     public void draw() {
         for (int in = 0; in < 8; in++) {
             System.out.println("  ========================================");
-            System.out.print((8-in)+" ");
+            System.out.print((8 - in) + " ");
             for (int i = 0; i < 8; i++) {
                 if (in % 2 == 0) {
                     if (i % 2 == 0)
@@ -38,12 +72,6 @@ public class BoardChess extends Board {
         return false;
     }
 
-    public boolean isValid(String move) {
-        if (move.length() != 4)
-            return false;
-        return true;
-    }
-
     @Override
     public void initialize() {
         board = new String[][] {
@@ -56,11 +84,6 @@ public class BoardChess extends Board {
                 { "P", "P", "P", "P", "P", "P", "P", "P" },
                 { "R", "N", "B", "Q", "K", "B", "N", "R" },
         };
-    }
-
-    public boolean check(String check) {
-
-        return false;
     }
 
 }
