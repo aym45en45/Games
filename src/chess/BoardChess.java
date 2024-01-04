@@ -5,6 +5,7 @@ import game.Board;
 public class BoardChess extends Board {
     private int[] square1 = new int[2];
     private int[] square2 = new int[2];
+    //trun pieces to hachMap
     final String[] pieces = { "K", "Q", "R", "N", "B", "P", "k", "q", "r", "n", "b", "p" };
 
     public BoardChess() {
@@ -17,14 +18,11 @@ public class BoardChess extends Board {
 
     public boolean check(String check) {
         split(check);
-        switch (getPiece(square1)) {
-            case " ":
-                return false;
-            case piece[2]:
-                return false;
-            default:
-                return false;
-        }
+        if (getPiece(square1).equals(" "))
+            return false;
+        else if (getPiece(square1).equalsIgnoreCase(pieces[0]))
+            return false;
+        return false;
 
     }
 
@@ -35,8 +33,8 @@ public class BoardChess extends Board {
     public void split(String split) {
         square1[0] = split.charAt(0) - 'a' + 1;
         square1[1] = split.charAt(1);
-        square2[0] = split.charAt(0) - 'a' + 1;
-        square2[1] = split.charAt(1);
+        square2[0] = split.charAt(2) - 'a' + 1;
+        square2[1] = split.charAt(3);
     }
 
     public boolean showValidMove(String move) {
