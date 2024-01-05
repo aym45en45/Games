@@ -23,7 +23,7 @@ public class MainXO extends Game {
                 col = scanner.nextInt() - 1;
                 if (!board.isValid(row, col)) {
                     System.out.println("Invalid case. Try again.");
-                } else {                    
+                } else {
                     details.setRowValid(row);
                     details.setColValid(col);
                     board.draw();
@@ -38,10 +38,11 @@ public class MainXO extends Game {
             changePlayer();
             while (!board.isValid(row, col)) {
                 try {
+                    System.out.println("\n");
                     board.draw(0);
                     System.out.println(
                             "u cant play in board " + (row + 1) + ", " + (col + 1)
-                                    + "Enter another row column to countine");
+                                    + " Enter another row column to countine");
                     row = scanner.nextInt() - 1;
                     col = scanner.nextInt() - 1;
                 } catch (java.util.InputMismatchException e) {
@@ -51,7 +52,7 @@ public class MainXO extends Game {
                 }
                 if (!board.isValid(row, col)) {
                     System.out.println("Invalid case. Try again.");
-                } else {                    
+                } else {
                     details.setRowValid(row);
                     details.setColValid(col);
                     board.draw();
@@ -91,8 +92,12 @@ public class MainXO extends Game {
             } while (!isValid);
         }
 
-        board.draw();
-        System.out.println("Game over!");
+        board.draw(0);
+        if (board.winner == "D") {
+            System.out.println("game Over! its a draw");
+        } else {
+            System.out.println("game Over! the player " + board.winner + " win");
+        }
         scanner.close();
     }
 
@@ -111,6 +116,7 @@ public class MainXO extends Game {
                 || (board.boardStatus[0][2].equals(getPlayer())
                         && board.boardStatus[1][1].equals(getPlayer())
                         && board.boardStatus[2][0].equals(getPlayer()))) {
+            board.winner = getPlayer();
             return true;
         }
         return false;
@@ -123,6 +129,7 @@ public class MainXO extends Game {
                     || (board.boardStatus[0][i].equals(getPlayer())
                             && board.boardStatus[1][i].equals(getPlayer())
                             && board.boardStatus[2][i].equals(getPlayer()))) {
+                board.winner = getPlayer();
                 return true;
             }
         }
@@ -137,6 +144,7 @@ public class MainXO extends Game {
                 }
             }
         }
+        board.winner = "D";
         return true;
     }
 
@@ -165,9 +173,11 @@ public class MainXO extends Game {
         if (var) {
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < 3; i++) {
-                    board.getBoard()[row * 3 + i][col * 3 + j] = getPlayer();
-                    if (board.getBoard()[i * 3 + row][j * 3 + col].equals(" ") ||
-                            board.getBoard()[i * 3 + row][j * 3 + col].equals(".")) {
+                    if (getPlayer().equals("X"))
+                        board.getBoard()[i + row * 3][j + col * 3] = board.patternX[i][j];
+                    else if (getPlayer().equals("O"))
+                        board.getBoard()[i + row * 3][j + col * 3] = board.patternO[i][j];
+                    if (board.getBoard()[i * 3 + row][j * 3 + col].equals(" ")) {
                         board.getBoard()[i * 3 + row][j * 3 + col] = getPlayer();
                         checkForWin(i, j);
                         checkForDraw(i, j);
@@ -183,7 +193,6 @@ public class MainXO extends Game {
         for (int i = 0; i < 3 && var; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board.getBoard()[row * 3 + i][col * 3 + j].equals(" ")
-                        || board.getBoard()[row * 3 + i][col * 3 + j].equals(".")
                         || board.boardStatus[row][col].equals(getPlayer())) {
                     var = false;
                     break;
@@ -193,9 +202,8 @@ public class MainXO extends Game {
         if (var) {
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < 3; i++) {
-                    board.getBoard()[row][col] = "D";
-                    if (board.getBoard()[i * 3 + row][j * 3 + col].equals(" ")
-                            || board.getBoard()[i * 3 + row][j * 3 + col].equals(".")) {
+                    board.getBoard()[i + row * 3][j + col * 3]= board.patternD[i][j];
+                    if (board.getBoard()[i * 3 + row][j * 3 + col].equals(" ")) {
                         board.getBoard()[i * 3 + row][j * 3 + col] = "D";
                         checkForDraw(i, j);
                     }

@@ -4,6 +4,22 @@ import game.Board;
 
 class BoardXO extends Board {
     String[][] boardStatus;
+    final String[][] patternX = {
+        { "X", "-", "X" },
+        { "-", "X", "-" },
+        { "X", "-", "X" }
+    };
+    final String[][] patternO = {
+        { "-", "O", "-" },
+        { "O", "-", "O" },
+        { "-", "O", "-" }
+    };
+    final String[][] patternD = {
+        { "D", "D", "D" },
+        { "D", "-", "D" },
+        { "D", "D", "D" }
+    };
+    String winner;
 
     public BoardXO() {
         initialize();
