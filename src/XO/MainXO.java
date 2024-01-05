@@ -190,7 +190,7 @@ public class MainXO extends Game {
         if (var) {
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < 3; i++) {
-                    board.boardStatus[row][col] = "D";
+                    board.getBoard()[row][col] = "D";
                     if (board.getBoard()[i * 3 + row][j * 3 + col].equals(" ")
                             || board.getBoard()[i * 3 + row][j * 3 + col].equals(".")) {
                         board.getBoard()[i * 3 + row][j * 3 + col] = "D";
