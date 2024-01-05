@@ -23,8 +23,9 @@ public class MainXO extends Game {
                 col = scanner.nextInt() - 1;
                 if (!board.isValid(row, col)) {
                     System.out.println("Invalid case. Try again.");
-                } else {
-                    DetailsXO.setNoValidCases(board.getBoard(), row, col);
+                } else {                    
+                    details.setRowValid(row);
+                    details.setColValid(col);
                     board.draw();
                 }
             } catch (java.util.InputMismatchException e) {
@@ -50,8 +51,9 @@ public class MainXO extends Game {
                 }
                 if (!board.isValid(row, col)) {
                     System.out.println("Invalid case. Try again.");
-                } else {
-                    DetailsXO.setNoValidCases(board.getBoard(), row, col);
+                } else {                    
+                    details.setRowValid(row);
+                    details.setColValid(col);
                     board.draw();
                 }
 
@@ -80,7 +82,8 @@ public class MainXO extends Game {
                     checkForDraw(row, col);
                     row = subRow;
                     col = subCol;
-                    DetailsXO.setNoValidCases(board.getBoard(), row, col);
+                    details.setRowValid(row);
+                    details.setColValid(col);
                     board.draw();
                 } else {
                     System.out.println("Invalid move. Try again.");

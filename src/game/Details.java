@@ -1,8 +1,8 @@
 package game;
 
 public class Details {
-    private int row;
-    private int col;
+    private int row = -1;
+    private int col = -1;
 
     public int getRow() {
         return row;

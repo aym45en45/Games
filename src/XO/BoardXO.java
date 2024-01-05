@@ -23,6 +23,8 @@ class BoardXO extends Board {
             for (int j = 0; j < D; j++) {
                 if (MainXO.details.getRow() == i && MainXO.details.getCol() == j) {
                     System.out.print("*" + board[i][j] + "*");
+                } else if (MainXO.details.getRowValid() == i/3 && MainXO.details.getColValid() == j/3) {
+                    System.out.print("." + board[i][j] + ".");
                 } else {
                     System.out.print(" " + board[i][j] + " ");
                 }
