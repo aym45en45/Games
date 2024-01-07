@@ -4,6 +4,14 @@ public class Details {
     private int row = -1;
     private int col = -1;
 
+    public Details() {
+    }
+    
+    public Details(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
+
     public int getRow() {
         return row;
     }

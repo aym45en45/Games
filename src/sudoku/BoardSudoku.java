@@ -1,7 +1,6 @@
 package sudoku;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import game.Board;
@@ -132,19 +131,6 @@ public class BoardSudoku extends Board {
 
             solvedBoard = copyBoard(board);
         } while (!solve());
-    }
-
-    private static String[][] copyBoard(String[][] original) {
-        if (original == null) {
-            return null;
-        }
-
-        String[][] copy = new String[original.length][];
-        for (int i = 0; i < original.length; i++) {
-            copy[i] = Arrays.copyOf(original[i], original[i].length);
-        }
-
-        return copy;
     }
 
     void solveBoard() {
