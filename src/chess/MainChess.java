@@ -9,6 +9,7 @@ public class MainChess extends Game {
   private static boolean x = false;
   private BoardChess board = new BoardChess();
   boolean showMsg = true;
+  boolean showMove = true;
 
   @Override
   public void play() {
@@ -16,8 +17,10 @@ public class MainChess extends Game {
     board.draw();
     while (!gameOver()) {
       changePlayer();
+      board.draw();
       String move;
       do {
+        showMove = false;
         System.out.println("Enter your move \"" + getPlayer() + "\" player : ");
         if (showMsg) {
           System.out.println("to move enter squares coordinates.[a-h][1-8][a-h][1-8] e.g. [e2e4]");
@@ -27,9 +30,11 @@ public class MainChess extends Game {
         move = scanner.next();
         switch (move.length()) {
           case 2:
-            if (isValidForCheckMove(move))
+            if (isValidForCheckMove(move)) {
               board.showValidMove(move);
-            else
+              board.draw();
+              showMove = true;
+            } else
               showMsg = true;
             break;
           case 4:
@@ -42,7 +47,7 @@ public class MainChess extends Game {
             showMsg = true;
             break;
         }
-      } while (showMsg);
+      } while (showMsg || showMove);
     }
 
     board.draw();
