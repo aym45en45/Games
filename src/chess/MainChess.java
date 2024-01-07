@@ -58,7 +58,7 @@ public class MainChess extends Game {
   }
 
   private boolean isValidForCheckMove(String move) {
-    String regex = "^[KkNnQqRrPpBb][a-h][1-8]$";
+    String regex = "^[a-h][1-8]$";
     Pattern pattern = Pattern.compile(regex);
     Matcher matcher = pattern.matcher(move);
     return matcher.matches();
