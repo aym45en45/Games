@@ -26,17 +26,17 @@ public class MainChess extends Game {
         }
         move = scanner.next();
         switch (move.length()) {
-          case 3:
+          case 2:
             if (isValidForCheckMove(move))
               board.showValidMove(move);
             else
-              showMsg = false;
+              showMsg = true;
             break;
           case 4:
             if (isValidMove(move))
               board.move(move);
             else
-              showMsg = false;
+              showMsg = true;
             break;
           default:
             showMsg = true;
