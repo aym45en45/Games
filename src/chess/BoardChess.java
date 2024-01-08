@@ -18,7 +18,7 @@ public class BoardChess extends Board {
     public void move(String move) {
         split(move);
         if (checkIfCanMove()) {
-            if (MainChess.getPlayer().equals("white")) {
+            if (MainChess.getPlayer().equals("White")) {
                 if (!getPiece(squareToEnd).equals(" "))
                     DetailsChess.capturedPiecesW.add(getPiece(squareToEnd));
             } else {
