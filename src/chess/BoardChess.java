@@ -98,7 +98,7 @@ public class BoardChess extends Board {
 
     @Override
     public void draw() {
-        System.out.println(Arrays.toString(DetailsChess.capturedPiecesW.toArray()));
+        System.out.println(Arrays.toString(DetailsChess.capturedPiecesB.toArray()));
         for (int in = 0; in < 8; in++) {
             System.out.println("  ========================================");
             System.out.print((8 - in) + " ");
@@ -119,7 +119,7 @@ public class BoardChess extends Board {
         }
         System.out.println("  ========================================");
         System.out.println("    a    b    c    d    e    f    g    h  ");
-        System.out.println(Arrays.toString(DetailsChess.capturedPiecesB.toArray()));
+        System.out.println(Arrays.toString(DetailsChess.capturedPiecesW.toArray()));
     }
 
     @Override
