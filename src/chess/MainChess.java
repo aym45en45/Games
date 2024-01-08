@@ -8,13 +8,12 @@ import game.Game;
 public class MainChess extends Game {
   private static boolean x = false;
   private BoardChess board = new BoardChess();
-  boolean showMsg = true;
+  static boolean showMsg = true;
   boolean showMove = true;
 
   @Override
   public void play() {
     Scanner scanner = new Scanner(System.in);
-    board.draw();
     while (!gameOver()) {
       changePlayer();
       board.draw();
